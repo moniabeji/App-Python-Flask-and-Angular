@@ -3,8 +3,8 @@ from flask import Flask, jsonify, request
 
 from flask_cors import CORS
 
-from .entities.entity import Session, engine, Base
-from .entities.exam import Exam, ExamSchema
+#from .entities.entity import Session, engine, Base
+#from .entities.exam import Exam, ExamSchema
 # ... other import statements ...
 
 # creating the Flask application
@@ -13,11 +13,13 @@ CORS(app)
 print(app)
 
 # if needed, generate database schema
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)
 # check for existing data
 
-
-
+@app.route('/')
+def hello_world():
+    return 'Hey, we have Flask in a Docker container!'
+'''
 @app.route('/exams')
 def get_exams():
     # fetching from the database
@@ -31,6 +33,7 @@ def get_exams():
     # serializing as JSON
     session.close()
     return jsonify(exams)
+    
 
 
 @app.route('/exams', methods=['POST'])
@@ -50,5 +53,6 @@ def add_exam():
     new_exam = ExamSchema().dump(exam)
     session.close()
     return jsonify(new_exam), 201
+'''
 if __name__ == '__main__':
     app.run()
